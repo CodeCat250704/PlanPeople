@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PlanPeople.App.ViewModels"
+        xmlns:views="using:PlanPeople.App.Views"
+        x:Class="PlanPeople.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="PlanPeople"
+        Width="1200" Height="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackgroundBrush}">
+  <Grid ColumnDefinitions="220, *">
+    <!-- 左侧导航栏 -->
+    <Border Grid.Column="0" Background="{DynamicResource AppSidebarBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,0,1,0">
+      <Grid RowDefinitions="Auto, *, Auto">
+        <TextBlock Grid.Row="0" Text="PlanPeople" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="20,25"/>
+        
+        <StackPanel Grid.Row="1" Spacing="5" Margin="10,0">
+          <!-- 导航按钮... (与之前完全一致，此处省略重复代码，保留你原有的) -->
+          <!-- 确保包含 NavigateProfileCommand 等绑定 -->
+          
+          <!-- 今日 -->
+          <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Command="{Binding NavigateTodayCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Padding="15,10">
+            <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource AppCardBrush}"/></Style>
+            </Button.Styles>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Path Data="{StaticResource IconToday}" Stroke="{DynamicResource AppTextBrush}" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Stretch="Uniform"/>
+              <TextBlock Text="今日日程" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+
+          <!-- 周视图 -->
+          <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Command="{Binding NavigateWeekCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Padding="15,10">
+            <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource AppCardBrush}"/></Style>
+            </Button.Styles>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Path Data="{StaticResource IconToday}" Stroke="{DynamicResource AppTextBrush}" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Stretch="Uniform"/>
+              <TextBlock Text="周视图" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+
+          <!-- AI 对话 -->
+          <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Command="{Binding NavigateAiChatCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Padding="15,10">
+            <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource AppCardBrush}"/></Style>
+            </Button.Styles>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Path Data="{StaticResource IconAi}" Stroke="{DynamicResource AppTextBrush}" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Stretch="Uniform"/>
+              <TextBlock Text="AI 对话" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+
+          <!-- 文档 -->
+          <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Command="{Binding NavigateDocsCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Padding="15,10">
+            <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource AppCardBrush}"/></Style>
+            </Button.Styles>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Path Data="{StaticResource IconDocs}" Stroke="{DynamicResource AppTextBrush}" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Stretch="Uniform"/>
+              <TextBlock Text="文档" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+
+          <!-- 个人中心 -->
+          <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Command="{Binding NavigateProfileCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Padding="15,10">
+            <Button.Styles>
+              <Style Selector="Button:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource AppCardBrush}"/></Style>
+            </Button.Styles>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Path Data="{StaticResource IconSettings}" Stroke="{DynamicResource AppTextBrush}" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Stretch="Uniform"/>
+              <TextBlock Text="个人中心" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
+        </StackPanel>
+        
+        <!-- 底部同步状态指示器 -->
+        <Border Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,10,15" Padding="10,5" CornerRadius="4" Background="{DynamicResource AppCardBrush}">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Ellipse Width="10" Height="10" VerticalAlignment="Center" Fill="#4CAF50"/>
+            <TextBlock Text="已就绪" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" VerticalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+
+    <!-- 右侧内容区 -->
+    <ContentControl Grid.Column="1" Content="{Binding CurrentPage}">
+      <ContentControl.DataTemplates>
+        <DataTemplate DataType="vm:TodayViewModel"><views:TodayView DataContext="{Binding}"/></DataTemplate>
+        <DataTemplate DataType="vm:WeekViewModel"><views:WeekView DataContext="{Binding}"/></DataTemplate>
+        <DataTemplate DataType="vm:ProfileViewModel"><views:ProfileView DataContext="{Binding}"/></DataTemplate>
+        <DataTemplate DataType="vm:AiChatViewModel"><views:AiChatView DataContext="{Binding}"/></DataTemplate>
+        <DataTemplate DataType="vm:DocsViewModel"><views:DocsView DataContext="{Binding}"/></DataTemplate>
+      </ContentControl.DataTemplates>
+    </ContentControl>
+  </Grid>
+</Window>

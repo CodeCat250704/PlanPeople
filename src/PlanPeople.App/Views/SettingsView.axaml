@@ -1,0 +1,216 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             x:Class="PlanPeople.App.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+  <Grid Background="Transparent">
+    
+    <TabControl TabStripPlacement="Left" Background="Transparent" Padding="0" Margin="0">
+      <TabControl.Styles>
+        <!-- 1. 左侧 Tab 基础样式 -->
+        <Style Selector="TabItem">
+          <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
+          <Setter Property="FontSize" Value="14"/>
+          <Setter Property="Padding" Value="15,12"/>
+          <Setter Property="MinWidth" Value="180"/>
+          <Setter Property="HorizontalContentAlignment" Value="Left"/>
+          <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        
+        <!-- 2. 鼠标悬停效果 -->
+        <Style Selector="TabItem:pointerover /template/ Border#PART_LayoutRoot">
+          <Setter Property="Background" Value="{DynamicResource AppCardBrush}"/>
+          <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        
+        <!-- 3. 选中状态：去掉所有紫色背景，改为透明背景+加粗字体 -->
+        <Style Selector="TabItem:selected /template/ Border#PART_LayoutRoot">
+          <Setter Property="Background" Value="Transparent"/>
+          <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="TabItem:selected TextBlock">
+          <Setter Property="Foreground" Value="#4CAF50"/>
+          <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+      </TabControl.Styles>
+
+      <!-- 1. 外观与行为 -->
+      <TabItem Header="外观与行为">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="外观与行为" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="主题" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <ComboBox Grid.Column="1" SelectedIndex="{Binding SelectedThemeIndex}" Width="250" HorizontalAlignment="Left">
+                  <ComboBoxItem Content="浅色 (Light)" />
+                  <ComboBoxItem Content="深色 (Dark)" />
+                  <ComboBoxItem Content="冰蓝 (Ice)" />
+                  <ComboBoxItem Content="云杉 (Spruce)" />
+                </ComboBox>
+              </Grid>
+
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="语言" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <ComboBox Grid.Column="1" SelectedIndex="{Binding SelectedLanguageIndex}" Width="250" HorizontalAlignment="Left">
+                  <ComboBoxItem Content="简体中文" />
+                  <ComboBoxItem Content="繁體中文" />
+                  <ComboBoxItem Content="English" />
+                  <ComboBoxItem Content="日本語" />
+                </ComboBox>
+              </Grid>
+
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="开机自启" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding RunAtLogin}" OnContent="开启" OffContent="关闭" HorizontalAlignment="Left"/>
+              </Grid>
+
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="关闭时最小化到托盘" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <ToggleSwitch Grid.Column="1" IsChecked="{Binding CloseToTray}" OnContent="开启" OffContent="关闭" HorizontalAlignment="Left"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- 2. 灵动岛 -->
+      <TabItem Header="灵动岛">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="灵动岛设置" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="显示样式" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <ComboBox Grid.Column="1" SelectedIndex="{Binding IslandStyleIndex}" Width="250" HorizontalAlignment="Left">
+                  <ComboBoxItem Content="胶囊悬浮 (Island)" />
+                  <ComboBoxItem Content="顶部状态栏 (TopBar)" />
+                </ComboBox>
+              </Grid>
+
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="折叠高度 (像素)" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <NumericUpDown Grid.Column="1" Value="{Binding IslandHeight}" Minimum="30" Maximum="200" Width="250" HorizontalAlignment="Left"/>
+              </Grid>
+
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="默认宽度 (像素)" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <NumericUpDown Grid.Column="1" Value="{Binding IslandWidth}" Minimum="100" Maximum="800" Width="250" HorizontalAlignment="Left"/>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- 3. AI 配置 -->
+      <TabItem Header="AI 配置">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="AI 配置" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="Base URL" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding AiBaseUrl}" Watermark="https://open.bigmodel.cn/api/paas/v4" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="模型名称" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding AiModel}" Watermark="glm-4-flash" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="API Key" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding AiApiKeyInput}" Watermark="API Key" PasswordChar="*" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+
+              <StackPanel Orientation="Horizontal" Spacing="15" Margin="200,10,0,0">
+                <Button Content="保存" Command="{Binding SaveAiConfigCommand}" Background="#4CAF50" Foreground="White" Padding="20,6" CornerRadius="4"/>
+                <Button Content="测试连接" Command="{Binding TestAiConnectionCommand}" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Padding="20,6" CornerRadius="4"/>
+                <TextBlock Text="{Binding AiStatus}" Foreground="#FFC107" VerticalAlignment="Center"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- 4. WebDAV 同步 -->
+      <TabItem Header="WebDAV 同步">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="WebDAV 同步" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="服务器地址" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding WebDavUrl}" Watermark="https://dav.jianguoyun.com/dav/" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="账号" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding WebDavUser}" Watermark="WebDAV 账号" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="密码" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding WebDavPassInput}" Watermark="应用密码" PasswordChar="*" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="加密口令" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <TextBox Grid.Column="1" Text="{Binding SyncPassInput}" Watermark="AES-256 数据加密口令" PasswordChar="*" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,8" CornerRadius="4"/>
+              </Grid>
+
+              <StackPanel Orientation="Horizontal" Spacing="15" Margin="200,10,0,0">
+                <Button Content="保存配置" Command="{Binding SaveSyncConfigCommand}" Background="#4CAF50" Foreground="White" Padding="20,6" CornerRadius="4"/>
+                <Button Content="测试推送" Command="{Binding TestSyncPushCommand}" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Padding="20,6" CornerRadius="4"/>
+                <Button Content="测试拉取" Command="{Binding TestSyncPullCommand}" Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Padding="20,6" CornerRadius="4"/>
+              </StackPanel>
+              <TextBlock Text="{Binding SyncTestResult}" Foreground="#FFC107" FontWeight="Bold" Margin="200,0,0,0"/>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- 5. 设备连接 -->
+      <TabItem Header="设备连接">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="设备连接" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="配置二维码" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" TextWrapping="Wrap"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="20">
+                  <Button Content="生成二维码" Command="{Binding GenerateQrCodeCommand}" Background="#2196F3" Foreground="White" Padding="20,6" CornerRadius="4" VerticalAlignment="Top"/>
+                  <Border Background="White" Padding="10" CornerRadius="8" IsVisible="{Binding QrCodeImage, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <Image Source="{Binding QrCodeImage}" Width="150" Height="150" />
+                  </Border>
+                </StackPanel>
+              </Grid>
+              <TextBlock Text="手机端扫码可快速同步 WebDAV 与 AI 配置（不包含敏感密码，加密保护）。" Foreground="{DynamicResource AppSubTextBrush}" FontSize="12" Margin="200,0,0,0" TextWrapping="Wrap"/>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- 6. 数据管理 -->
+      <TabItem Header="数据管理">
+        <ScrollViewer>
+          <Border Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20" MaxWidth="800" HorizontalAlignment="Left">
+            <StackPanel Spacing="15">
+              <TextBlock Text="数据管理" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,0,10"/>
+              
+              <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="备份数据" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="15">
+                  <Button Content="导出全量数据" Command="{Binding ExportBackupCommand}" Background="#2196F3" Foreground="White" Padding="15,6" CornerRadius="4"/>
+                  <Button Content="从最新备份恢复" Command="{Binding ImportBackupCommand}" Background="#FF9800" Foreground="White" Padding="15,6" CornerRadius="4"/>
+                </StackPanel>
+              </Grid>
+              <TextBlock Text="{Binding DataStatus}" Foreground="#FFC107" FontWeight="Bold" Margin="200,0,0,0"/>
+            </StackPanel>
+          </Border>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+  </Grid>
+</UserControl>

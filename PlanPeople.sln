@@ -1,0 +1,7 @@
+PlanPeople/
+├── src/PlanPeople.App/PlanPeople.App.csproj
+├── src/PlanPeople.Core/PlanPeople.Core.csproj
+├── src/PlanPeople.Data/PlanPeople.Data.csproj
+├── src/PlanPeople.Sync/PlanPeople.Sync.csproj
+├── src/PlanPeople.AI/PlanPeople.AI.csproj
+└── src/PlanPeople.Splash/PlanPeople.Splash.csproj

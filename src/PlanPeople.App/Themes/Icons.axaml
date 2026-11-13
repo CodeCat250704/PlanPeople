@@ -1,0 +1,29 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Lucide Icons Geometry (基于 24x24 视口) -->
+  
+  <!-- 日历/今日 -->
+  <StreamGeometry x:Key="IconToday">M8 2v4 M16 2v4 M3 10h18 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z</StreamGeometry>
+  
+  <!-- 设置 (齿轮) -->
+  <StreamGeometry x:Key="IconSettings">M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z</StreamGeometry>
+
+  <!-- AI 对话 -->
+  <StreamGeometry x:Key="IconAi">M12 8V4H8 M4 8h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z M9 13v2 M15 13v2</StreamGeometry>
+  
+  <!-- 文档 -->
+  <StreamGeometry x:Key="IconDocs">M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z M14 2v4a2 2 0 0 0 2 2h4 M16 13H8 M16 17H8 M10 9H8</StreamGeometry>
+  
+  <!-- 导入 -->
+  <StreamGeometry x:Key="IconImport">M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3</StreamGeometry>
+  
+  <!-- 导出 -->
+  <StreamGeometry x:Key="IconExport">M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M17 8l-5-5-5 5 M12 3v12</StreamGeometry>
+
+  <!-- 左右切换 -->
+  <StreamGeometry x:Key="IconChevronLeft">m15 18-6-6 6-6</StreamGeometry>
+  <StreamGeometry x:Key="IconChevronRight">m9 18 6-6-6-6</StreamGeometry>
+
+  <!-- 气泡里的日历图标 -->
+  <StreamGeometry x:Key="IconCalendarAdd">M8 2v4 M16 2v4 M3 10h18 M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z M12 14v4 M10 16h4</StreamGeometry>
+</ResourceDictionary>

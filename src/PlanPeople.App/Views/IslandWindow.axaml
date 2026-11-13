@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PlanPeople.App.ViewModels"
+        xmlns:models="using:PlanPeople.Core.Models"
+        x:Class="PlanPeople.App.Views.IslandWindow"
+        x:DataType="vm:IslandViewModel"
+        WindowStartupLocation="Manual"
+        CanResize="False"
+        SystemDecorations="None"
+        TransparencyLevelHint="Transparent"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False">
+  
+  <!-- 使用 ViewModel 中的 IsHovered 控制样式，或者根据窗口尺寸自动适配 -->
+  <Border Background="#121212" CornerRadius="24" BoxShadow="0 4 20 0 #66000000">
+    <Grid>
+      
+      <!-- 悬停展开状态 (模拟 iOS 灵动岛变大) -->
+      <Grid IsVisible="{Binding $parent[Window].Bounds.Height, Converter={x:Static ObjectConverters.IsNotNull}}" RowDefinitions="Auto, *, Auto" Margin="20" MinHeight="100">
+        <!-- 顶部：时间和天气 -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+          <StackPanel>
+            <TextBlock Text="{Binding CurrentTime}" FontSize="28" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="{Binding CurrentDate}" FontSize="12" Foreground="#AAAAAA"/>
+          </StackPanel>
+          <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+            <TextBlock Text="{Binding WeatherTemp}" FontSize="24" FontWeight="Bold" Foreground="#FF9800" HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding WeatherCondition}" FontSize="12" Foreground="#AAAAAA" HorizontalAlignment="Right"/>
+          </StackPanel>
+        </Grid>
+
+        <!-- 中间：日程和新闻 -->
+        <ScrollViewer Grid.Row="1" Margin="0,15,0,0">
+          <StackPanel Spacing="10">
+            <TextBlock Text="今日日程" FontSize="14" FontWeight="Bold" Foreground="#4CAF50"/>
+            <ItemsControl ItemsSource="{Binding TodayEvents}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:CalendarEvent">
+                  <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,5">
+                    <TextBlock Text="{Binding Start, StringFormat='{}{0:HH:mm}'}" Foreground="#4CAF50" FontSize="12" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Title}" Foreground="White" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border Height="1" Background="#333" Margin="0,10"/>
+            <TextBlock Text="实时热搜" FontSize="14" FontWeight="Bold" Foreground="#FF9800"/>
+            <TextBlock Text="{Binding LatestNews}" Foreground="White" FontSize="12" TextWrapping="Wrap"/>
+          </StackPanel>
+        </ScrollViewer>
+
+        <!-- 底部状态 -->
+        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Margin="0,10,0,0">
+          <StackPanel Orientation="Horizontal" Spacing="15">
+            <TextBlock Text="{Binding CpuUsage}" Foreground="#AAAAAA" FontSize="11"/>
+            <TextBlock Text="{Binding RamUsage}" Foreground="#AAAAAA" FontSize="11"/>
+          </StackPanel>
+          <Button Grid.Column="1" Content="打开主窗口" Command="{Binding OpenMainWindowCommand}" Background="Transparent" Foreground="#2196F3" FontSize="12"/>
+        </Grid>
+      </Grid>
+
+      <!-- 默认极小状态 (不悬停时显示) -->
+      <Grid IsVisible="{Binding $parent[Window].Bounds.Height, Converter={x:Static ObjectConverters.IsNull}}" ColumnDefinitions="Auto, *, Auto" Margin="15,0" Height="48" VerticalAlignment="Center">
+        <TextBlock Grid.Column="0" Text="{Binding CurrentTime}" FontSize="16" FontWeight="Bold" Foreground="White" Margin="0,0,15,0" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Text="{Binding WeatherCondition, StringFormat='{}{0}'}" Foreground="#AAAAAA" FontSize="12" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="2" Text="{Binding CpuUsage}" Foreground="#AAAAAA" FontSize="11" Margin="10,0" VerticalAlignment="Center"/>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>

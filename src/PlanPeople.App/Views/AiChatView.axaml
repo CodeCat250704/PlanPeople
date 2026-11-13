@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             xmlns:models="using:PlanPeople.Core.Models"
+             xmlns:views="using:PlanPeople.App.Views"
+             x:Class="PlanPeople.App.Views.AiChatView"
+             x:DataType="vm:AiChatViewModel">
+  <Grid ColumnDefinitions="250, *" Background="{DynamicResource AppBackgroundBrush}">
+    
+    <!-- 左侧历史话题 -->
+    <Border Grid.Column="0" Background="{DynamicResource AppSidebarBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,0,1,0">
+      <Grid RowDefinitions="Auto, *">
+        <Button Grid.Row="0" Content="+ 新对话" Command="{Binding NewChatCommand}" Margin="10" HorizontalAlignment="Stretch" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}"/>
+        
+        <ListBox Grid.Row="1" ItemsSource="{Binding Threads}" SelectionChanged="ThreadSelectionChanged" Background="Transparent">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="models:Thread">
+              <TextBlock Text="{Binding Title}" Foreground="{DynamicResource AppTextBrush}" Margin="0,5" TextTrimming="CharacterEllipsis"/>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </Border>
+
+    <!-- 右侧聊天区 -->
+    <Grid Grid.Column="1" RowDefinitions="*, Auto">
+      <ScrollViewer Grid.Row="0" Margin="20">
+        <ItemsControl ItemsSource="{Binding Messages}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid Margin="0,15">
+                <!-- 气泡本体 -->
+                <Border CornerRadius="8" Padding="15" MaxWidth="700" Tag="{Binding Role, Converter={x:Static views:AiChatView.IsUserConverter}}">
+                  <Border.Styles>
+                    <Style Selector="Border">
+                      <Setter Property="HorizontalAlignment" Value="Left"/>
+                      <Setter Property="Background" Value="{DynamicResource AppCardBrush}"/>
+                      <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}"/>
+                      <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                    <Style Selector="Border[Tag=True]">
+                      <Setter Property="HorizontalAlignment" Value="Right"/>
+                      <Setter Property="Background" Value="#2E7D32"/>
+                      <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                  </Border.Styles>
+
+                  <StackPanel Spacing="8">
+                    <!-- 角色标识 -->
+                    <TextBlock Text="{Binding Role}" FontSize="10" Foreground="{DynamicResource AppSubTextBrush}" FontWeight="Bold"/>
+                    
+                    <!-- 消息文本 -->
+                    <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Foreground="{DynamicResource AppTextBrush}" FontSize="14" LineHeight="20"/>
+                    
+                    <!-- 内联样式的“加入”按钮 -->
+                    <Button Click="AddScheduleClick"
+                            Tag="{Binding}"
+                            IsVisible="{Binding IsParsedEvent}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="0"
+                            HorizontalAlignment="Left"
+                            Cursor="Hand">
+                      <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                          <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                      </Button.Styles>
+                      <TextBlock Text="[ 添加该日程到日历 ]" Foreground="#2196F3" FontSize="13" TextDecorations="Underline"/>
+                    </Button>
+                  </StackPanel>
+                </Border>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+
+      <!-- 底部输入框 -->
+      <Border Grid.Row="1" Background="{DynamicResource AppSidebarBrush}" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,1,0,0">
+        <Grid ColumnDefinitions="*, Auto">
+          <TextBox Grid.Column="0" Watermark="输入自然语言，例如：明天下午3点开会..." 
+                   Text="{Binding InputText}" AcceptsReturn="True" Height="60" Margin="0,0,15,0"
+                   Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="0" CornerRadius="8" Padding="10"/>
+          <Button Grid.Column="1" Content="发送" Command="{Binding SendCommand}" 
+                  VerticalAlignment="Bottom" Height="60" Width="80" 
+                  Background="#4CAF50" Foreground="White" CornerRadius="8" FontWeight="Bold"/>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

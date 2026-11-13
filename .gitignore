@@ -1,0 +1,52 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+publish/
+dist/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Application specific
+config.json
+*.db
+*.log
+crash.log
+
+# 🚨 坚决拦截所有可能意外生成的编译产物 🚨
+publish/
+Splash/
+**/publish/
+**/Splash/
+*.exe
+*.dll
+*.pdb
+*.json.lock

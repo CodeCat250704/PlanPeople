@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    
+    <!-- 新增：WPF 不支持代码裁剪，在此关闭 -->
+    <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+</Project>

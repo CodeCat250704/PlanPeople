@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             xmlns:models="using:PlanPeople.Core.Models"
+             xmlns:md="using:Markdown.Avalonia"
+             x:Class="PlanPeople.App.Views.DocsView"
+             x:DataType="vm:DocsViewModel">
+  <Grid ColumnDefinitions="250, *" Background="{DynamicResource AppBackgroundBrush}">
+    
+    <!-- 左侧文档列表 -->
+    <Border Grid.Column="0" Background="{DynamicResource AppSidebarBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,0,1,0">
+      <Grid RowDefinitions="Auto, *">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" Spacing="5">
+          <Button Content="+ 新建" Command="{Binding AddNoteCommand}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" HorizontalAlignment="Stretch"/>
+          <Button Content="导入" Command="{Binding ImportMarkdownCommand}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}"/>
+        </StackPanel>
+        
+        <ListBox Grid.Row="1" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" Background="Transparent">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="models:Note">
+              <StackPanel Margin="0,5">
+                <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Text="{Binding UpdatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" FontSize="11" Foreground="{DynamicResource AppSubTextBrush}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </Border>
+
+    <!-- 右侧编辑/预览区 -->
+    <Grid Grid.Column="1">
+      <!-- 空状态 -->
+      <TextBlock Text="请选择或新建一个文档" Foreground="{DynamicResource AppSubTextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                 IsVisible="{Binding !HasSelectedNote}"/>
+
+      <!-- 编辑器主体 -->
+      <Grid RowDefinitions="Auto, Auto, *" Margin="20" IsVisible="{Binding HasSelectedNote}">
+        
+        <!-- 顶部工具栏 -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto, Auto, Auto">
+          <TextBox Grid.Column="0" Watermark="文档标题" Text="{Binding EditTitle}" FontSize="20" FontWeight="Bold" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" BorderThickness="0" Margin="0,0,20,0"/>
+          
+          <Button Grid.Column="1" Content="AI 润色" Command="{Binding AiPolishCommand}" Background="#2196F3" Foreground="White" Padding="10,5" CornerRadius="4" Margin="0,0,10,0"/>
+          <Button Grid.Column="2" Content="保存" Command="{Binding SaveNoteCommand}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Padding="10,5" CornerRadius="4" Margin="0,0,10,0"/>
+          <Button Grid.Column="3" Content="导出 MD" Command="{Binding ExportMarkdownCommand}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Padding="10,5" CornerRadius="4" Margin="0,0,10,0"/>
+          <Button Grid.Column="4" Content="删除" Command="{Binding DeleteNoteCommand}" Background="#D32F2F" Foreground="White" Padding="10,5" CornerRadius="4"/>
+        </Grid>
+        
+        <Border Grid.Row="1" Height="1" Background="{DynamicResource AppBorderBrush}" Margin="0,10"/>
+
+        <!-- 状态栏 -->
+        <TextBlock Grid.Row="1" Text="{Binding AiStatus}" Foreground="#FFC107" FontSize="12" Margin="0,15,0,0" VerticalAlignment="Bottom"/>
+        
+        <!-- 左右双栏 -->
+        <Grid Grid.Row="2" ColumnDefinitions="*, 1, *">
+          
+          <!-- 左侧：Markdown 源码编辑 -->
+          <Border Grid.Column="0" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="15">
+            <TextBox Text="{Binding EditContent, Mode=TwoWay}" 
+                     AcceptsReturn="True" 
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Top"
+                     Background="Transparent"
+                     Foreground="{DynamicResource AppTextBrush}"
+                     FontFamily="Consolas, Menlo, monospace"
+                     FontSize="14"
+                     BorderThickness="0"
+                     Watermark="# 开始记录您的想法..."/>
+          </Border>
+          
+          <!-- 右侧：实时预览 (跟随主题) -->
+          <Border Grid.Column="2" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="15"
+                  Background="{DynamicResource AppCardBrush}">
+            <md:MarkdownScrollViewer Markdown="{Binding EditContent}" />
+          </Border>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

@@ -1,0 +1,98 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             x:Class="PlanPeople.App.Views.EventEditView"
+             x:DataType="vm:EventEditViewModel">
+  <Border Background="{DynamicResource AppBackgroundBrush}" Padding="25" CornerRadius="12" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" BoxShadow="0 10 30 0 #44000000">
+    <Grid RowDefinitions="Auto, *, Auto" Width="460">
+      
+      <!-- 标题栏 -->
+      <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,20">
+        <TextBlock Text="编辑日程" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" VerticalAlignment="Center"/>
+        <!-- 优先级标签展示 -->
+        <Border Grid.Column="1" Background="#FF9800" CornerRadius="4" Padding="8,2" IsVisible="{Binding IsHighPriority}">
+           <TextBlock Text="高优先级" Foreground="White" FontSize="10" FontWeight="Bold"/>
+        </Border>
+      </Grid>
+
+      <!-- 表单内容 -->
+      <ScrollViewer Grid.Row="1" Margin="0,0,10,0">
+        <StackPanel Spacing="20">
+          
+          <!-- 基础信息 -->
+          <StackPanel Spacing="10">
+            <TextBlock Text="标题" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}"/>
+            <TextBox Text="{Binding Title}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Watermark="添加标题" FontSize="16"/>
+            
+            <TextBlock Text="地点" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" Margin="0,5,0,0"/>
+            <TextBox Text="{Binding Location}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Watermark="添加地点"/>
+          </StackPanel>
+
+          <!-- 时间设置 (上下两行，避免挤压) -->
+          <Border BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="15" Background="{DynamicResource AppCardBrush}">
+            <Grid RowDefinitions="Auto, Auto">
+              
+              <!-- 开始时间 -->
+              <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
+                <TextBlock Grid.Column="0" Text="开始" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" VerticalAlignment="Center" Width="40"/>
+                <DatePicker Grid.Column="1" SelectedDate="{Binding StartDate}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="5,0"/>
+                <TimePicker Grid.Column="2" SelectedTime="{Binding StartTime}" Background="Transparent" BorderThickness="0" Width="100"/>
+              </Grid>
+              
+              <!-- 结束时间 -->
+              <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto">
+                <TextBlock Grid.Column="0" Text="结束" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" VerticalAlignment="Center" Width="40"/>
+                <DatePicker Grid.Column="1" SelectedDate="{Binding EndDate}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="5,0"/>
+                <TimePicker Grid.Column="2" SelectedTime="{Binding EndTime}" Background="Transparent" BorderThickness="0" Width="100"/>
+              </Grid>
+            </Grid>
+          </Border>
+
+          <!-- 提醒与重复 (Margin 代替 ColumnSpacing) -->
+          <Grid ColumnDefinitions="*, *" Margin="0,5">
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+              <TextBlock Text="提醒" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" Margin="0,0,0,5"/>
+              <ComboBox SelectedIndex="{Binding ReminderIndex}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="不提醒" />
+                <ComboBoxItem Content="5 分钟前" />
+                <ComboBoxItem Content="15 分钟前" />
+                <ComboBoxItem Content="30 分钟前" />
+                <ComboBoxItem Content="1 小时前" />
+              </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+              <TextBlock Text="重复" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" Margin="0,0,0,5"/>
+              <ComboBox SelectedIndex="{Binding RecurrenceIndex}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="不重复" />
+                <ComboBoxItem Content="每天" />
+                <ComboBoxItem Content="每周" />
+                <ComboBoxItem Content="每月" />
+              </ComboBox>
+            </StackPanel>
+          </Grid>
+
+          <!-- 优先级与描述 -->
+          <StackPanel Spacing="10">
+            <TextBlock Text="重要程度" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}"/>
+            <ComboBox SelectedIndex="{Binding Priority}" HorizontalAlignment="Stretch" Background="{DynamicResource AppCardBrush}">
+              <ComboBoxItem Content="普通" />
+              <ComboBoxItem Content="重要" />
+              <ComboBoxItem Content="紧急" />
+            </ComboBox>
+
+            <TextBlock Text="描述" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" Margin="0,5,0,0"/>
+            <TextBox Text="{Binding Description}" AcceptsReturn="True" Height="80" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Watermark="添加详细信息..."/>
+          </StackPanel>
+          
+        </StackPanel>
+      </ScrollViewer>
+
+      <!-- 底部按钮 -->
+      <Grid Grid.Row="2" ColumnDefinitions="*, Auto, Auto" Margin="0,20,0,0">
+        <Button Grid.Column="1" Content="取消" Command="{Binding CancelCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,10,0"/>
+        <Button Grid.Column="2" Content="保存日程" Command="{Binding SaveCommand}" Background="#4CAF50" Foreground="White" Padding="20,8" CornerRadius="6"/>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>

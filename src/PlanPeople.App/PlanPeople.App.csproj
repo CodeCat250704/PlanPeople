@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Avalonia.Diagnostics" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="PleasantUI" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+    <PackageReference Include="QRCoder" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlanPeople.Core\PlanPeople.Core.csproj" />
+    <ProjectReference Include="..\PlanPeople.Data\PlanPeople.Data.csproj" />
+    <ProjectReference Include="..\PlanPeople.Sync\PlanPeople.Sync.csproj" />
+    <ProjectReference Include="..\PlanPeople.AI\PlanPeople.AI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Themes\**" />
+    <AvaloniaResource Include="Localization\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Markdown.Avalonia" />
+    <PackageReference Include="System.Management" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" />
+  </ItemGroup>
+</Project>

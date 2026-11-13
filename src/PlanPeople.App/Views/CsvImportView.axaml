@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             x:Class="PlanPeople.App.Views.CsvImportView"
+             x:DataType="vm:CsvImportViewModel">
+  <Border Background="{DynamicResource AppBackgroundBrush}" Padding="25" CornerRadius="12" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" BoxShadow="0 10 30 0 #44000000">
+    <Grid RowDefinitions="Auto, *, Auto" Width="600" Height="550">
+      
+      <!-- 标题栏 -->
+      <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,15">
+        <TextBlock Text="CSV 导入与列映射" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" VerticalAlignment="Center"/>
+        <Button Grid.Column="1" Content="重新选择文件" Command="{Binding PickFileCommand}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Padding="10,5" CornerRadius="4"/>
+      </Grid>
+
+      <!-- 滚动内容区 -->
+      <ScrollViewer Grid.Row="1">
+        <StackPanel Spacing="15">
+          <TextBlock Text="{Binding FilePath}" Foreground="{DynamicResource AppSubTextBrush}" FontSize="12" TextWrapping="Wrap"/>
+          
+          <TextBlock Text="列映射" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}"/>
+          
+          <!-- 映射表单改为纯 StackPanel 组合 -->
+          <StackPanel Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="标题 (必填)" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" Width="100"/>
+              <ComboBox ItemsSource="{Binding Headers}" SelectedItem="{Binding SelectedTitleColumn}" Width="400"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="开始时间 (必填)" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" Width="100"/>
+              <ComboBox ItemsSource="{Binding Headers}" SelectedItem="{Binding SelectedStartColumn}" Width="400"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="结束时间" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" Width="100"/>
+              <ComboBox ItemsSource="{Binding Headers}" SelectedItem="{Binding SelectedEndColumn}" Width="400"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="地点" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" Width="100"/>
+              <ComboBox ItemsSource="{Binding Headers}" SelectedItem="{Binding SelectedLocationColumn}" Width="400"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="描述" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" Width="100"/>
+              <ComboBox ItemsSource="{Binding Headers}" SelectedItem="{Binding SelectedDescriptionColumn}" Width="400"/>
+            </StackPanel>
+          </StackPanel>
+
+          <TextBlock Text="数据预览 (前 5 行)" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" Margin="0,10,0,0"/>
+          <DataGrid ItemsSource="{Binding PreviewRows}" AutoGenerateColumns="True" Height="150" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1"/>
+          
+          <TextBlock Text="{Binding Status}" Foreground="#FFC107" FontWeight="Bold" Margin="0,5,0,0"/>
+        </StackPanel>
+      </ScrollViewer>
+
+      <!-- 底部按钮 -->
+      <Grid Grid.Row="2" ColumnDefinitions="*, Auto, Auto" Margin="0,15,0,0">
+        <Button Grid.Column="1" Content="取消" Command="{Binding CancelCommand}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}" Margin="0,0,15,0"/>
+        <Button Grid.Column="2" Content="开始导入" Command="{Binding ImportCommand}" Background="#4CAF50" Foreground="White" Padding="20,8" CornerRadius="6"/>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>

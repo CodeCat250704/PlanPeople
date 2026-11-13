@@ -1,0 +1,44 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup Label="Avalonia">
+    <PackageVersion Include="Avalonia" Version="11.2.6" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.2.6" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.2.6" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.6" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.2.6" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.6" Condition="'$(Configuration)' == 'Debug'" />
+  </ItemGroup>
+
+  <ItemGroup Label="UI">
+    <PackageVersion Include="PleasantUI" Version="4.0.0-alpha.3" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Data">
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.11" />
+  </ItemGroup>
+
+  <ItemGroup Label="Security">
+    <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="QR">
+    <PackageVersion Include="QRCoder" Version="1.6.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Markdown">
+    <PackageVersion Include="Markdown.Avalonia" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Island">
+    <PackageVersion Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Island">
+    <PackageVersion Include="System.Management" Version="8.0.0" />
+    <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
+  </ItemGroup>
+</Project>

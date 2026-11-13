@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PlanPeople.App.ViewModels"
+        x:Class="PlanPeople.App.Views.OobeWindow"
+        x:DataType="vm:OobeViewModel"
+        Title="PlanPeople 欢迎您"
+        Width="700" Height="500"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        SystemDecorations="BorderOnly"
+        Background="{DynamicResource AppBackgroundBrush}">
+  <Grid RowDefinitions="*, Auto" Margin="40">
+    
+    <Grid Grid.Row="0">
+      
+      <!-- Step 0 -->
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20" IsVisible="{Binding IsStep0}">
+        <Path Data="{StaticResource IconToday}" Stroke="#4CAF50" StrokeThickness="2" Fill="Transparent" Width="80" Height="80" Stretch="Uniform" HorizontalAlignment="Center"/>
+        <TextBlock Text="欢迎使用 PlanPeople" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}"/>
+        <TextBlock Text="您的本地+云端智能日程管理助手" FontSize="16" Foreground="{DynamicResource AppSubTextBrush}"/>
+      </StackPanel>
+
+      <!-- Step 1 -->
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20" IsVisible="{Binding IsStep1}">
+        <TextBlock Text="选择您的视觉风格" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}"/>
+        <ComboBox SelectedIndex="{Binding SelectedThemeIndex}" Width="300">
+          <ComboBoxItem Content="浅色 (Light)" />
+          <ComboBoxItem Content="深色 (Dark)" />
+          <ComboBoxItem Content="冰蓝 (Ice)" />
+          <ComboBoxItem Content="云杉 (Spruce)" />
+        </ComboBox>
+      </StackPanel>
+
+      <!-- Step 2 -->
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="15" IsVisible="{Binding IsStep2}">
+        <TextBlock Text="配置 AI 助手" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}"/>
+        <TextBox Text="{Binding AiBaseUrl}" Watermark="Base URL" Width="400" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}"/>
+        <TextBox Text="{Binding AiModel}" Watermark="模型名" Width="400" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}"/>
+        <TextBox Text="{Binding AiApiKey}" Watermark="API Key" PasswordChar="*" Width="400" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}"/>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Content="测试连接" Command="{Binding TestAiCommand}" Background="#2196F3" Foreground="White" Padding="15,5"/>
+          <TextBlock Text="{Binding StatusText}" Foreground="#FFC107" VerticalAlignment="Center"/>
+        </StackPanel>
+      </StackPanel>
+
+      <!-- Step 3 -->
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20" IsVisible="{Binding IsStep3}">
+        <TextBlock Text="一切准备就绪！" FontSize="28" FontWeight="Bold" Foreground="#4CAF50"/>
+        <TextBlock Text="点击下方按钮开始您的日程管理之旅。" Foreground="{DynamicResource AppTextBrush}"/>
+      </StackPanel>
+    </Grid>
+
+    <!-- 底部按钮 -->
+    <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto, Auto" Margin="0,20,0,0">
+      <Button Grid.Column="0" Content="上一步" Command="{Binding PrevStepCommand}" IsVisible="{Binding !IsStep0}" Background="Transparent" Foreground="{DynamicResource AppTextBrush}"/>
+      
+      <Button Grid.Column="2" Content="下一步" Command="{Binding NextStepCommand}" IsVisible="{Binding !IsStep3}" Background="{DynamicResource AppCardBrush}" Foreground="{DynamicResource AppTextBrush}" Padding="20,8" CornerRadius="4" Margin="0,0,10,0"/>
+      
+      <Button Grid.Column="3" Content="完成并启动" Command="{Binding FinishCommand}" IsVisible="{Binding IsStep3}" Background="#4CAF50" Foreground="White" Padding="20,8" CornerRadius="4"/>
+    </Grid>
+  </Grid>
+</Window>

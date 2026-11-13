@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PlanPeople.App.ViewModels"
+             xmlns:views="using:PlanPeople.App.Views"
+             x:Class="PlanPeople.App.Views.ProfileView"
+             x:DataType="vm:ProfileViewModel">
+  <Grid ColumnDefinitions="250, *" Background="{DynamicResource AppBackgroundBrush}">
+    
+    <!-- 左侧个人信息卡片 -->
+    <Border Grid.Column="0" Background="{DynamicResource AppSidebarBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,0,1,0">
+      <StackPanel Margin="20" Spacing="15" VerticalAlignment="Top">
+        <!-- 头像 -->
+        <Border Width="80" Height="80" CornerRadius="40" Background="#4CAF50" HorizontalAlignment="Center">
+          <TextBlock Text="{Binding UserInitial}" Foreground="White" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <TextBlock Text="{Binding UserName}" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}" HorizontalAlignment="Center"/>
+        <TextBlock Text="本地账户" FontSize="12" Foreground="{DynamicResource AppSubTextBrush}" HorizontalAlignment="Center"/>
+      </StackPanel>
+    </Border>
+
+    <!-- 右侧设置区 -->
+    <Grid Grid.Column="1" RowDefinitions="Auto, *">
+      
+      <!-- 账号设置卡片 -->
+      <Border Grid.Row="0" Background="{DynamicResource AppCardBrush}" CornerRadius="8" Padding="20" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1" Margin="20,20,20,0">
+        <StackPanel Spacing="10">
+          <TextBlock Text="账号信息" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AppTextBrush}"/>
+          <Grid ColumnDefinitions="100, *">
+            <TextBlock Grid.Column="0" Text="昵称" VerticalAlignment="Center" Foreground="{DynamicResource AppTextBrush}"/>
+            <TextBox Grid.Column="1" Text="{Binding UserName}" Width="200" HorizontalAlignment="Left" 
+                     Background="{DynamicResource AppBackgroundBrush}" Foreground="{DynamicResource AppTextBrush}" BorderThickness="1" BorderBrush="{DynamicResource AppBorderBrush}" Padding="10,5"/>
+          </Grid>
+        </StackPanel>
+      </Border>
+
+      <!-- 嵌入设置页 -->
+      <views:SettingsView Grid.Row="1" DataContext="{Binding Settings}"/>
+    </Grid>
+  </Grid>
+</UserControl>
